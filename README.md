@@ -19,8 +19,12 @@ The Project is in early development and can't considered a full version yet
 ## Installation
 
 1. Clone the repository with the simple git command 
-$ git clone https://github.com/Unkn8wn69/moneroocean-telegram-bot/
-- Now go into the folder moneroocean-telegram-bot
+```
+2. git clone https://github.com/Unkn8wn69/moneroocean-telegram-bot/
+```
+3. Now go into the folder moneroocean-telegram-bot
+```
 $ cd moneroocean-telegram-bot
+```
 - 
 
