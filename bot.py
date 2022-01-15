@@ -12,16 +12,19 @@ import requests
 import json
 import time
 
+# Logging and Bot config
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
 
-updater = Updater("Telegram Bot API Key",
+updater = Updater("5065508658:AAHP9MQjkJ-HGGoExsoQ4z6oN4EYL1xxwsw",
                   use_context=True)
 
+# Global Variables
 Address = "Address not set"
+coin = "USD"
 
 def help(update: Update, context: CallbackContext):
     update.message.reply_text("Use /start to start the bot")
@@ -31,7 +34,7 @@ def start(update: Update, context: CallbackContext):
     keyboard = [
         [
             InlineKeyboardButton("⚙️Settings", callback_data='settings'),
-            InlineKeyboardButton("Start", callback_data='StartRequestData'),
+            InlineKeyboardButton("▶️Start", callback_data='StartRequestData'),
         ],
     ]
 
@@ -62,18 +65,35 @@ def queryHandler(update: Update, context: CallbackContext):
     update.callback_query.answer()
 
     if "StartRequestData" in query:
-        global Workers
-        SiteExtEnd = "/stats/"
-        url = "https://api.moneroocean.stream/miner/" + str(Address) + SiteExtEnd
+        # Variables:
+        url = f'https://api.moneroocean.stream/miner/{Address}/stats/'
+        url_payments = f'https://api.moneroocean.stream/miner/{Address}/payments'
+        url_MoneroPrice = 'https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB'
+        # JSON commands
         r = requests.get(url)
-        y = json.loads(r.text)
+        price = requests
+        stats_json = r.json()
+        stats_str = json.dumps(stats_json)
 
+        # Hashrate
+        Hashes = int(stats_json["hash2"])
+        KiloHashesRAW = Hashes/1000
+        KiloHashes = round(KiloHashesRAW)
+        KHsText = str(KiloHashes) + " KH/s"
 
+        # Amount Due
+        rawAmtDue = (stats_json["amtDue"])
+        amtDue = rawAmtDue * 10**-12
+        amtDueRounded = round(amtDue, 6)
+        amtDueText = str(amtDueRounded) + " XMR"
 
-        khRaw = int(y["hash2"])
-        kh = round(khRaw)
+        # Amount Paid
+        rawAmtPaid = (stats_json["amtPaid"])
+        amtPaid = rawAmtPaid * 10**-12
+        amtPaidRounded = round(amtPaid, 6)
+        amtPaidText = str(amtPaidRounded) + " XMR"
 
-        text = "These are your current Statistics:\n\nYour Hashrate is " + str(kh) + " H/s"
+        text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\nYour total due amount is:\n" + amtDueText + "\nYour total paid amount is:\n" + amtPaidText
 
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
