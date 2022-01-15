@@ -18,13 +18,28 @@ The Project is in early development and can't considered a full version yet
 
 ## Installation
 
-1. Clone the repository with the simple git command 
+#### Dependencies
+> * python-3.9.9 & pip
+> * python-telegram-bot pip package
+> * Bot token by @BotFather on Telegram
+
+
+
+1. Clone or download the repository and navigate into it's downloaded folder 
 ```
-2. git clone https://github.com/Unkn8wn69/moneroocean-telegram-bot/
-```
-3. Now go into the folder moneroocean-telegram-bot
-```
+$ git clone https://github.com/Unkn8wn69/moneroocean-telegram-bot/
 $ cd moneroocean-telegram-bot
 ```
-- 
+2. Edit the bot.py with your chosen file editor and paste in the bot token that you got handed when creating the bot at the @Botfather on telegram
+```
+updater = Updater("Telegram Bot API Key",
+                  use_context=True)
+```
+3. Safe the file and execute it with python-3.9.9
+```
+$ python bot.py
+```
+!! Make sure you install the python-telegram-bot library with ```$ pip install python-telegram-bot```
+
+Your bot should be started and working now
 
