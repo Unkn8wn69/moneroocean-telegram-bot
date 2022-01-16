@@ -36,7 +36,7 @@ $ cd moneroocean-telegram-bot
 updater = Updater("Telegram Bot API Key",
                   use_context=True)
 ```
-3. Safe the file and execute it with python-3.9.9
+3. Save the file and execute it with python-3.9.9
 ```
 $ python bot.py
 ```
