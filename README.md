@@ -43,12 +43,25 @@ Make sure you install the python-telegram-bot library with ```$ pip install pyth
 ### A publicly hosted instance of the bot is available under the username @moneroocean_en_bot
 https://t.me/moneroocean_en_bot
 
+## Author
+
+* **Unkn8wn69**
+* Credit to **Moneroocean** 
+
+
+## License
+
+This project is licensed under the GPL-3.0 License - see the [LICENSE](/LICENSE) file for details
+
 ## Donate
 
 Monero(XMR): ```493e1fciPXh1ZBnUtDan7QZKmnNGzQyCMU2U7MCg1mxyWyiaHKyBKxS7sZsg5uA9mZZyshw54dwHxAVDNsULfXTv4GEHUWo```
-</tr>
-Bitcoin(BTC):
+
+BTC:
 https://fixedfloat.com/exchange/btc-to-xmr
-</tr>
-Litecoin(LTC): 
+
+LTC: 
 https://fixedfloat.com/exchange/ltc-to-xmr
+
+ETH:
+https://fixedfloat.com/exchange/eth-to-xmr
