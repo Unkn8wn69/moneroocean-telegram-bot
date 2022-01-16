@@ -8,6 +8,7 @@ The Project is in early development and can't considered a full version yet
 
 * Set an Address
 * Request Hashrate, Amount Due and Amount Paid from the Moneroocean API of your set address.
+* 'Due and Paid' Amount in your preferred currency
 
 ## Upcoming Features
 
