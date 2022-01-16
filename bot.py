@@ -19,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-updater = Updater("Your Bot API Token here",
+updater = Updater("5065508658:AAHP9MQjkJ-HGGoExsoQ4z6oN4EYL1xxwsw",
                   use_context=True)
 
 # Global Variables
@@ -36,9 +36,9 @@ def start(update: Update, context: CallbackContext):
     ]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="Welcome to the Moneroocean Bot\nJump into the settings to configure the Bot")
+    context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="*Welcome to the Moneroocean Bot*\n\nJump into the settings to configure the Bot", parse_mode= 'Markdown')
 
- 
+
 def reply(update, context):
     user_input = update.message.text
     update.message.reply_text(ReturnAddress(user_input, update, context))
@@ -48,7 +48,7 @@ def ReturnAddress(user_input, update, context):
         [
             InlineKeyboardButton("⬅️Back", callback_data='settings'),
             InlineKeyboardButton("▶️Start", callback_data='StartRequestData'),
-            
+
         ],
     ]
 
@@ -65,22 +65,23 @@ def queryHandler(update: Update, context: CallbackContext):
     update.callback_query.answer()
 
     if "StartRequestData" in query:
-        # XMR to fiat price
 
-        url = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB"
+
+
+        # XMR to fiat price
+        url = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB,PLN"
         c = requests.get(url)
         price_json = c.json()
 
         pricefull = int(price_json[Fiat])
         price = round(pricefull)
-        print(price)
 
         OneFiatprice = 1/price
 
         # Variables:
         url = f'https://api.moneroocean.stream/miner/{Address}/stats/'
         url_payments = f'https://api.moneroocean.stream/miner/{Address}/payments'
-        url_MoneroPrice = 'https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB'
+        url_MoneroPrice = 'https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB,PLN,'
 
         # JSON commands
         r = requests.get(url)
@@ -111,10 +112,23 @@ def queryHandler(update: Update, context: CallbackContext):
         amtPaidFiatRounded = round(amtPaidFiat)
         amtPaidText = "*" + str(amtPaidRounded) + " XMR" + " (" + str(amtPaidFiatRounded) + " " + Fiat + ")*"
 
+        # Configuring Buttons
+
+        keyboard = [
+            [
+                InlineKeyboardButton("⚙️Settings", callback_data='settings'),
+                InlineKeyboardButton("🔄Refresh", callback_data='StartRequestData'),
+
+            ],
+        ]
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        # final command
 
         text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\n\nYour total due amount is:\n" + amtDueText + "\n\nYour total paid amount is:\n" + amtPaidText
 
-        context.bot.send_message(chat_id=update.effective_chat.id, text=text, parse_mode= 'Markdown')
+        context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text=text, parse_mode= 'Markdown')
 
     if "settings" in query:
 
@@ -130,7 +144,7 @@ def queryHandler(update: Update, context: CallbackContext):
             ],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        context.bot.send_message(chat_id=update.effective_chat.id, text="The currently set address is: " + Address, reply_markup=reply_markup)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="The currently set address is: *" + Address + "*\nThe currently chosen Currency is *" + Fiat + "*", reply_markup=reply_markup, parse_mode= 'Markdown')
 
 
     if "BackStart" in query:
@@ -142,7 +156,7 @@ def queryHandler(update: Update, context: CallbackContext):
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
-            context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="Welcome to the Moneroocean Bot")
+            context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="*Welcome to the Moneroocean Bot*\n\nJump into the settings to configure the Bot", parse_mode= 'Markdown')
 
 # Fiat settings
     if "SetFiat" in query:
@@ -153,23 +167,27 @@ def queryHandler(update: Update, context: CallbackContext):
                 ],
                 [
                 InlineKeyboardButton("🇷🇺RUB", callback_data="FiatRUB"),
+                InlineKeyboardButton("🇵🇱PLN", callback_data="FiatPLN"),
+                ],
+                [
                 InlineKeyboardButton("⬅️Back", callback_data='settings'),
                 ],
-                
                 ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="Choose your currency")
-        
-      
+
+
    # SetFiatEUR
     if "FiatEuro" in query:
     	Fiat = "EUR"
     # SetFiatRUB
     if "FiatRUB" in query:
-        Fiat = "EUR"
+        Fiat = "RUB"
     # SetFiatUSD
     if "FiatUSD" in query:
 	    Fiat = "USD"
+    if "FiatPLN" in query:
+        Fiat = "PLN"
 
     if "DelAddress" in query:
         keyboard = [
