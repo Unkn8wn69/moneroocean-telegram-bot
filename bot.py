@@ -24,7 +24,7 @@ updater = Updater("5065508658:AAHP9MQjkJ-HGGoExsoQ4z6oN4EYL1xxwsw",
 
 # Global Variables
 Address = "Address not set"
-coin = "USD"
+Fiat = "USD"
 
 def help(update: Update, context: CallbackContext):
     update.message.reply_text("Use /start to start the bot")
@@ -39,7 +39,7 @@ def start(update: Update, context: CallbackContext):
     ]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="Welcome to the Moneroocean Bot")
+    context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text="Welcome to the Moneroocean Bot\nJump into the settings to configure the Bot")
 
 
 def reply(update, context):
@@ -49,7 +49,7 @@ def reply(update, context):
 def ReturnAddress(user_input, update, context):
     keyboard = [
         [
-            InlineKeyboardButton("↩️Back", callback_data='settings'),
+            InlineKeyboardButton("⬅️Back", callback_data='settings'),
         ],
     ]
 
@@ -61,14 +61,28 @@ def ReturnAddress(user_input, update, context):
 
 def queryHandler(update: Update, context: CallbackContext):
     global Address
+    global Fiat
     query = update.callback_query.data
     update.callback_query.answer()
 
     if "StartRequestData" in query:
+        # XMR to fiat price
+
+        url = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB"
+        c = requests.get(url)
+        price_json = c.json()
+
+        pricefull = int(price_json[Fiat])
+        price = round(pricefull)
+        print(price)
+
+        OneFiatprice = 1/price
+
         # Variables:
         url = f'https://api.moneroocean.stream/miner/{Address}/stats/'
         url_payments = f'https://api.moneroocean.stream/miner/{Address}/payments'
         url_MoneroPrice = 'https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,RUB'
+
         # JSON commands
         r = requests.get(url)
         price = requests
@@ -79,23 +93,29 @@ def queryHandler(update: Update, context: CallbackContext):
         Hashes = int(stats_json["hash2"])
         KiloHashesRAW = Hashes/1000
         KiloHashes = round(KiloHashesRAW)
-        KHsText = str(KiloHashes) + " KH/s"
+        KHsText = "*" + str(KiloHashes) + " KH/s*"
 
         # Amount Due
         rawAmtDue = (stats_json["amtDue"])
         amtDue = rawAmtDue * 10**-12
         amtDueRounded = round(amtDue, 6)
-        amtDueText = str(amtDueRounded) + " XMR"
+        amtDueFiat = amtDueRounded/OneFiatprice
+        amtDueFiatRounded = round(amtDueFiat)
+        amtDueText = "*" + str(amtDueRounded) + " XMR" + " (" + str(amtDueFiatRounded) + " " +  Fiat + ")*"
+
 
         # Amount Paid
         rawAmtPaid = (stats_json["amtPaid"])
         amtPaid = rawAmtPaid * 10**-12
         amtPaidRounded = round(amtPaid, 6)
-        amtPaidText = str(amtPaidRounded) + " XMR"
+        amtPaidFiat = amtPaidRounded/OneFiatprice
+        amtPaidFiatRounded = round(amtPaidFiat)
+        amtPaidText = "*" + str(amtPaidFiatRounded) + " XMR" + " (" + str(amtPaidFiatRounded) + " " + Fiat + ")*"
 
-        text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\nYour total due amount is:\n" + amtDueText + "\nYour total paid amount is:\n" + amtPaidText
 
-        context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+        text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\n\nYour total due amount is:\n" + amtDueText + "\n\nYour total paid amount is:\n" + amtPaidText
+
+        context.bot.send_message(chat_id=update.effective_chat.id, text=text, parse_mode= 'Markdown')
 
     if "settings" in query:
 
@@ -106,7 +126,7 @@ def queryHandler(update: Update, context: CallbackContext):
 
             ],
             [
-            InlineKeyboardButton("↩️Back", callback_data='BackStart'),
+            InlineKeyboardButton("⬅️Back", callback_data='BackStart'),
             ],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -127,7 +147,7 @@ def queryHandler(update: Update, context: CallbackContext):
     if "DelAddress" in query:
         keyboard = [
             [
-                InlineKeyboardButton("↩️Back", callback_data='settings'),
+                InlineKeyboardButton("⬅️Back", callback_data='settings'),
                 ],
                 ]
 
