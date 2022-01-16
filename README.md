@@ -17,6 +17,7 @@ The Project is in early development and can't considered a full version yet
 * Multiple addresses
 * Payment history 
 * Payout threshold settings
+* fixedfloat.com crypto convert API
 
 ## Dependencies
 > * python-3.9.9 & pip
