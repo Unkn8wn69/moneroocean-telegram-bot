@@ -59,11 +59,11 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](/LICENSE)
 
 Monero(XMR): ```493e1fciPXh1ZBnUtDan7QZKmnNGzQyCMU2U7MCg1mxyWyiaHKyBKxS7sZsg5uA9mZZyshw54dwHxAVDNsULfXTv4GEHUWo```
 
-BTC:
+BTC:        
 https://fixedfloat.com/exchange/btc-to-xmr
 
-LTC: 
+LTC:          
 https://fixedfloat.com/exchange/ltc-to-xmr
 
-ETH:
+ETH:           
 https://fixedfloat.com/exchange/eth-to-xmr
