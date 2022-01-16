@@ -1,4 +1,5 @@
-# moneroocean-telegram-bot
+# Moneroocean Telegram Bot
+#### by u/unkn8wn69
 
 The Moneroocean Telegram Bot is a tool to request the statistic of the users specified monero address.
 The Project is in early development and can't considered a full version yet
@@ -16,14 +17,12 @@ The Project is in early development and can't considered a full version yet
 * Payment history 
 * Payout threshold settings
 
-## Installation
-
-#### Dependencies
+## Dependencies
 > * python-3.9.9 & pip
 > * python-telegram-bot pip package
 > * Bot token by @BotFather on Telegram
 
-
+## Installation
 
 1. Clone or download the repository and navigate into it's downloaded folder 
 ```
@@ -39,7 +38,17 @@ updater = Updater("Telegram Bot API Key",
 ```
 $ python bot.py
 ```
-!! Make sure you install the python-telegram-bot library with ```$ pip install python-telegram-bot```
+Make sure you install the python-telegram-bot library with ```$ pip install python-telegram-bot```
 
-Your bot should be started and working now
+### A publicly hosted instance of the bot is available under the username @moneroocean_en_bot
+https://t.me/moneroocean_en_bot
 
+## Donate
+
+Monero(XMR): ```493e1fciPXh1ZBnUtDan7QZKmnNGzQyCMU2U7MCg1mxyWyiaHKyBKxS7sZsg5uA9mZZyshw54dwHxAVDNsULfXTv4GEHUWo```
+</tr>
+Bitcoin(BTC):
+https://fixedfloat.com/exchange/btc-to-xmr
+</tr>
+Litecoin(LTC): 
+https://fixedfloat.com/exchange/ltc-to-xmr
