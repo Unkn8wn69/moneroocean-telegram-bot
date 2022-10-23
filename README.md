@@ -14,6 +14,7 @@ The Project is in early development and can't considered a full version yet
 * Set an Address
 * Request Hashrate, Amount Due and Amount Paid from the Moneroocean API of your set address.
 * Amounts shown in your preferred currency
+* Get profit forecasts for daily, weekly, monthly and yearly profits in your selected currency
 
 ## Upcoming Features
 
