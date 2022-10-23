@@ -19,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-updater = Updater("YOUR BOT API TOKEN",
+updater = Updater("YOUR API KEY",
                   use_context=True)
 
 # Global Variables
@@ -103,6 +103,22 @@ def queryHandler(update: Update, context: CallbackContext):
         amtDueFiatRounded = round(amtDueFiat)
         amtDueText = "*" + str(amtDueRounded) + " XMR" + " (" + str(amtDueFiatRounded) + " " +  Fiat + ")*"
 
+        # Profit Forcast
+        forcast_url = f"https://www.coincalculators.io/api?name=monero&hashrate={Hashes}"
+        forcast_request = requests.get(forcast_url)
+        forcast_json = forcast_request.json()
+
+        daily = float(forcast_json["rewardsInDay"])
+        weekly = float(forcast_json["rewardsInWeek"])
+        monthly = float(forcast_json["rewardsInMonth"])
+        yearly = float(forcast_json["rewardsInYear"])
+
+        dailyFiat = daily/OneFiatprice
+        weekylFiat = weekly/OneFiatprice
+        monthlyFiat = monthly/OneFiatprice
+        yearlyFiat = yearly/OneFiatprice
+
+        forcastText = f"\n You accumilate approximitaly {daily} XMR ({dailyFiat} USD) Daily"
 
         # Amount Paid
         rawAmtPaid = (stats_json["amtPaid"])
@@ -111,6 +127,7 @@ def queryHandler(update: Update, context: CallbackContext):
         amtPaidFiat = amtPaidRounded/OneFiatprice
         amtPaidFiatRounded = round(amtPaidFiat)
         amtPaidText = "*" + str(amtPaidRounded) + " XMR" + " (" + str(amtPaidFiatRounded) + " " + Fiat + ")*"
+
 
         # Configuring Buttons
 
@@ -126,7 +143,7 @@ def queryHandler(update: Update, context: CallbackContext):
 
         # final command
 
-        text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\n\nYour total due amount is:\n" + amtDueText + "\n\nYour total paid amount is:\n" + amtPaidText
+        text = "These are your current Statistics:\n\nYour total hashrate is: " + KHsText + "\n\nYour total due amount is:\n" + amtDueText + "\n\nYour total paid amount is:\n" + amtPaidText + forcastText
 
         context.bot.send_message(chat_id=update.effective_chat.id, reply_markup=reply_markup, text=text, parse_mode= 'Markdown')
 
