@@ -47,8 +47,7 @@ $ python bot.py
 ```
 Make sure you install the python-telegram-bot library with ```$ pip install python-telegram-bot```
 
-### (under maintenance right now) A publicly hosted instance of the bot is available under the username @moneroocean_en_bot
-https://t.me/moneroocean_en_bot
+### 
 
 ## Author
 
