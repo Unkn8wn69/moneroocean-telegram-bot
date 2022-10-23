@@ -19,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-updater = Updater("YOUR API KEY",
+updater = Updater("YOUR BOT API KEY HERE",
                   use_context=True)
 
 # Global Variables
@@ -103,22 +103,22 @@ def queryHandler(update: Update, context: CallbackContext):
         amtDueFiatRounded = round(amtDueFiat)
         amtDueText = "*" + str(amtDueRounded) + " XMR" + " (" + str(amtDueFiatRounded) + " " +  Fiat + ")*"
 
-        # Profit Forcast
-        forcast_url = f"https://www.coincalculators.io/api?name=monero&hashrate={Hashes}"
-        forcast_request = requests.get(forcast_url)
-        forcast_json = forcast_request.json()
+        # Profit Forecast
+        forecast_url = f"https://www.coincalculators.io/api?name=monero&hashrate={Hashes}"
+        forecast_request = requests.get(forcast_url)
+        forecast_json = forecast_request.json()
 
-        daily = float(forcast_json["rewardsInDay"])
-        weekly = float(forcast_json["rewardsInWeek"])
-        monthly = float(forcast_json["rewardsInMonth"])
-        yearly = float(forcast_json["rewardsInYear"])
+        daily = round(float(forcast_json["rewardsInDay"]), 5)
+        weekly = round(float(forcast_json["rewardsInWeek"]), 5)
+        monthly = round(float(forcast_json["rewardsInMonth"]), 5)
+        yearly = round(float(forcast_json["rewardsInYear"]), 5)
 
-        dailyFiat = daily/OneFiatprice
-        weekylFiat = weekly/OneFiatprice
-        monthlyFiat = monthly/OneFiatprice
-        yearlyFiat = yearly/OneFiatprice
+        dailyFiat = round(daily/OneFiatprice, 3)
+        weeklyFiat = round(weekly/OneFiatprice, 3)
+        monthlyFiat = round(monthly/OneFiatprice, 3)
+        yearlyFiat = round(yearly/OneFiatprice, 3)
 
-        forcastText = f"\n You accumilate approximitaly {daily} XMR ({dailyFiat} USD) Daily"
+        forecastText = f"\n\nYour forecast is:\n*Daily* {daily} XMR *({dailyFiat} USD)*\n*Weekly* {weekly} XMR *({weeklyFiat} USD)*\n*Monthly* {monthly} XMR *({monthlyFiat} USD)*\n*Yearly* {yearly} XMR *({yearlyFiat} USD)*"
 
         # Amount Paid
         rawAmtPaid = (stats_json["amtPaid"])
