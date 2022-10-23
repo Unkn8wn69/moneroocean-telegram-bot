@@ -19,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-updater = Updater("YOUR BOT API KEY HERE",
+updater = Updater("Telegram Bot API Key",
                   use_context=True)
 
 # Global Variables
